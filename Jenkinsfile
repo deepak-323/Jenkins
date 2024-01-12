@@ -6,7 +6,7 @@ pipeline {
                 script {
                     git branch: 'main',
                         credentialsId: 'Credential ID',
-                        url: 'https://github.com/deepak-323/Pipeline.git'
+                        url: 'https://github.com/deepak-323/Jenkins.git'
                 }
             }
         }
