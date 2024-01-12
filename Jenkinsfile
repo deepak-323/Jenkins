@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script { // Your build commands go here 
 	          sh "chmod +x -R ${env.WORKSPACE}" 
-		  sh '/usr/bin/python3 /var/lib/jenkins/workspace/Pipeline-2/TF_Inference_cifar.py'
+		  sh '/usr/bin/python3 /var/lib/jenkins/workspace/Pipeline-2/default/TF_Inference_cifar.py'
 		  sh "echo ${currentBuild.number}"
 	       }
             }
