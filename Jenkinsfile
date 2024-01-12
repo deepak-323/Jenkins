@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script { // Your build commands go here 
 	          sh "chmod +x -R ${env.WORKSPACE}" 
-		  sh '/usr/bin/python3 /var/lib/jenkins/workspace/pipeline-1/TF_Inference_cifar.py'
+		  sh '/usr/bin/python3 /var/lib/jenkins/workspace/Pipeline-2/TF_Inference_cifar.py'
 		  sh "echo ${currentBuild.number}"
 	       }
             }
@@ -35,12 +35,12 @@ pipeline {
             steps {
                 script {
                     def buildNumber = env.BUILD_NUMBER
-                    def outputDir = "/var/lib/jenkins/jobs/pipeline-1/builds/${currentBuild.number}"
+                    def outputDir = "/var/lib/jenkins/jobs/Pipeline-2/builds/${currentBuild.number}"
 
                     // Check if the directory exists
                     if (fileExists(outputDir)) {
                         // Create a tar file
-                        sh "sleep 5 && tar --warning=no-file-changed -czvf /var/lib/jenkins/workspace/pipeline-1/output.tar.gz --exclude='*.tmp' --ignore-failed-read -C ${outputDir} ."
+                        sh "sleep 5 && tar --warning=no-file-changed -czvf /var/lib/jenkins/workspace/Pipeline-2/output.tar.gz --exclude='*.tmp' --ignore-failed-read -C ${outputDir} ."
                     } else {
                         error "Output directory not found: ${outputDir}"
                    }
@@ -50,15 +50,15 @@ pipeline {
 	stage('Upload to S3') {
             steps {
                 script {
-                    def outputDir = "/var/lib/jenkins/workspace/pipeline-1"
-		    sh "aws s3 cp ${outputDir}/output.tar.gz s3://mcw-pipeline/Artifacts/pipeline-1/${currentBuild.number}/"
+                    def outputDir = "/var/lib/jenkins/workspace/Pipeline-2"
+		    sh "aws s3 cp ${outputDir}/output.tar.gz s3://mcw-pipeline/Artifacts/Pipeline-2/${currentBuild.number}/"
 
                 }
             }
         }
     }
     environment {
-        BUILD_URL = "http://15.206.159.119:8080/job/pipeline-1/${currentBuild.number}"
+        BUILD_URL = "http://15.206.159.119:8080/job/Pipeline-2/${currentBuild.number}"
     }
     post {
       failure {
